@@ -34,7 +34,7 @@ class Library {
   string find_author(string title); // lookup, finds books by same author
   string find_album(string title); // reverse lookup, finds books same name 
   void delete_book(string author, string title); //having problems with the name of this, changed it to delete_book
-  bool loadFromFile(string fileName);
+  bool loadFromFile(string filename);
   bool saveToFile(string filename);
 };
 
