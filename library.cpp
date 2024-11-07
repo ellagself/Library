@@ -91,7 +91,7 @@ string Library::find_album(string title){
 
 
 void Library::delete_book(string author, string title){
-  Entry *temp;
+  Entry *temp = head;
   Entry* eraser = NULL;
 
   // case 1, empty list
@@ -100,7 +100,7 @@ void Library::delete_book(string author, string title){
     // nothing to delete, just returns
   }
   // case 2, delete the head of the list
-  if(head->book.author == author) {
+  if(head->book.author == author && head->book.title == title) {
     eraser = head;
     head = head->next;
     delete eraser;
@@ -108,7 +108,7 @@ void Library::delete_book(string author, string title){
   }
 
   while(temp->next != NULL) {
-    if(temp->next->book.author == author){
+    if(temp->next->book.author == author && temp->next->book.title == title){
       eraser = temp->next;
       temp->next = eraser->next;
       delete eraser;
@@ -118,11 +118,11 @@ void Library::delete_book(string author, string title){
   }
 }
 
-void Library::loadFromFile(string filename) {
+bool Library::loadFromFile(string filename) {
     ifstream file(filename);
     if (!file.is_open()) {
         cout<< "Failed to open file: " << filename << endl;
-        return;
+        return false;
     }
 
     string author, title, isbn;
@@ -135,4 +135,32 @@ void Library::loadFromFile(string filename) {
 
     file.close();
     cout << "Books loaded from file." << endl;
+    return true;
+}
+
+bool Library::saveToFile(string filename) {
+    //open file in write mode
+    ofstream outFile(filename);
+
+    if (!outFile) {
+        cerr << "Error opening file for writing." << endl;
+        return false;
+    }
+
+    // traverse through list and write each book detail to file
+    Entry* curr = head;
+    while (curr != NULL) {
+        outFile << curr->book.author << "\n"
+                << curr->book.title << "\n"
+                << curr->book.pages << "\n"
+                << curr->book.isbn << "\n"
+                << curr->book.price << "\n"
+                << curr->book.year << "\n";
+        curr = curr->next;
+    }
+
+    //close file after writing
+    outFile.close();
+    cout << "Library saved to file: " << filename << std::endl;
+    return true;
 }
