@@ -30,7 +30,7 @@ class Library {
   Library(); // constructor
   ~Library(); // destructor
   
-  void insert_sorted(string author, string title);
+  void insert_sorted(string author, string title, string isbn, int pages, int year, float price);
   string find_author(string title); // lookup, finds books by same author
   string find_album(string title); // reverse lookup, finds books same name 
   void delete_book(string author, string title); //having problems with the name of this, changed it to delete_book
