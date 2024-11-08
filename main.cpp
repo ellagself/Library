@@ -44,7 +44,7 @@ int main() {
       cout<<"Enter ISBN: ";cin>>isbn;
       cout<<"Enter price: ";cin>>price;
       cout<<"Enter year: ";cin>>year;
-      library.insert_sorted(author, title);
+      library.insert_sorted(author, title, isbn, pages, year, price);
       break;
 
     case 2:
@@ -68,6 +68,7 @@ int main() {
 
     case 5:
       library.find_author("");//lists books
+      cout << "Displaying all books:\n"; //DEBUG
       break;
 
     case 6:
