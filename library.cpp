@@ -32,20 +32,25 @@ void Library::destructHelper(Entry *curr){
   }
 
   destructHelper(curr->next);
-  cout << "Removing book: " << curr->book.author << " " << curr->book.title << endl;
-
   delete curr; 
 }
 
-void Library::insert_sorted(string author, string title){
+void Library::insert_sorted(string author, string title, string isbn, int pages, int year, float price){
   Entry* newEntry = new Entry;
   newEntry->book.author = author;
-  newEntry->book.title = title; 
+  newEntry->book.title = title;
+  newEntry->book.isbn = isbn;
+  newEntry->book.pages = pages;
+  newEntry->book.year = year;
+  newEntry->book.price = price;
   newEntry->next = NULL; 
+  cout << "Initial head: " << head << endl;  //DEBUG
+  cout << "Inserting: " << title << " by " << author << endl; //DEBUG OUTPUT
 
+  
   // if list is empty insert here
-  if(head == NULL){
-    newEntry-> next = head;
+  if(head == NULL || head->book.title > title){
+    newEntry->next = head;
     head = newEntry;
   }
   else {
@@ -61,14 +66,25 @@ void Library::insert_sorted(string author, string title){
 //lookup but its find_author
 string Library::find_author(string author){
     Entry* curr = head;
-    while (curr != NULL){
-      if (curr->book.author == author){
-	return curr->book.title; 
-      }
-      curr = curr->next;
+    string result;
+    
+    if (author.empty()) {
+      while (curr != NULL){
+	result += curr->book.title +" by " + curr->book.author + "\n";
+	curr = curr->next;
     }
-    return ""; 
+      
+      cout << "Books found: " << result << endl; //DEBUG OUTPUT
+    return result;
   }
+     while (curr != NULL) {
+        if (curr->book.author == author) {
+	  return curr->book.title + " by " + curr->book.author;  // Return title if author matches
+        }
+        curr = curr->next;
+    }
+     return result.empty() ? "Author not found.": result;  // Return empty string if author not found
+}
 
 
 // reverse lookup, find books by certain author
@@ -78,12 +94,14 @@ string Library::find_album(string title){
    
    while (curr != NULL){
      if (curr->book.title == title){
-       authors += curr->book.author + "'"; //add author to list
+       authors += curr->book.author + ","; //add author to list
      }
      curr = curr->next; 
    }
    if (!authors.empty()) {
      authors = authors.substr(0, authors.length()-2);
+   } else {
+     return "No authors found for this title.";
    }
    
    return authors;
@@ -130,7 +148,7 @@ bool Library::loadFromFile(string filename) {
     float price;
 
     while (file >> author >> title >> isbn >> pages >> year >> price) {
-        insert_sorted(author, title);
+      insert_sorted(author, title, isbn, pages, year, price);
     }
 
     file.close();
