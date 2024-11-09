@@ -10,8 +10,16 @@
 #ifndef LIBRARY_H
 #define LIBRARY_H
 
+#include "book.h"
 #include <string>
 using namespace std; 
+
+struct Entry {
+  Book book;
+  Entry* next;
+
+  Entry () : book(), next(nullptr) {}
+};
 
 class Library {
  private:
@@ -22,6 +30,7 @@ class Library {
  public:
   Library(); // constructor
   ~Library(); // destructor
+<<<<<<< HEAD
   void insert_sorted(string author, string title);
   void find_author(string title); // lookup, finds books by same author
   void find_album(string title); // reverse lookup, finds books same name 
@@ -31,6 +40,15 @@ class Library {
   void push_back(string author, string title);
   void push_front(string author, string title); 
   void print(); 
+=======
+  
+  void insert_sorted(string author, string title, string isbn, int pages, int year, float price);
+  string find_author(string title); // lookup, finds books by same author
+  string find_album(string title); // reverse lookup, finds books same name 
+  void delete_book(string author, string title); //having problems with the name of this, changed it to delete_book
+  bool loadFromFile(string filename);
+  bool saveToFile(string filename);
+>>>>>>> b401b0a69e0f4cf9621407734ee94132b75b4c75
 };
 
 #endif
