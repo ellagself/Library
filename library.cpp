@@ -41,7 +41,7 @@ Library::destructHelper(Entry *curr){
 
 void Library::insert_sorted(string author, string title){
   Entry* newEntry = new Entry;
-  newEntry->author = authore;
+  newEntry->author = author;
   newEntry->title = title; 
   newEntry->next = NULL; 
 
@@ -61,7 +61,7 @@ void Library::insert_sorted(string author, string title){
 }
 
 //lookup but its find_author
-string Library::find_author(string title){
+string Library::find_author(string author){
     Entry* curr = head;
     while (curr != NULL){
       if (curr->author == author){
@@ -86,7 +86,7 @@ string Library::find_album(string title){
  }
 
 
-void Library::delete(string author, string title){
+void Library::delete_book(string author, string title){
   Entry *temp;
   Entry* eraser = NULL;
 
@@ -96,21 +96,22 @@ void Library::delete(string author, string title){
     // nothing to delete, just returns
   }
   // case 2, delete the head of the list
-  if(head->author == author) {
-    eraser = head;
+  if(head->author == author && head-> title == title ) {
+    Entry* temp = head;
     head = head->next;
-    delete eraser;
+    delete temp;
     return; 
   }
 
-  while(temp->next != NULL) {
-    if(temp->next->author == author){
-      eraser = temp->next;
-      temp->next = eraser->next;
+  Entry* curr = head; 
+  while(curr->next != NULL) {
+    if(curr->next->author == author && curr->next->title == title){
+      Entry* temp = curr->next;
+      curr->next = curr->next->next;
       delete eraser;
       return;
     }
-    temp = temp->next;
+    curr = curr->next;
   }
 }
 
@@ -122,11 +123,11 @@ void Library::load_from_file(string fileName){
     cout << "File could not open. " << endl;
     return; 
   }
-  
-  if (getline(author, title)){
-      push_back(author, title);
+
+  string author, title; 
+  while (getline(author, title)){
+      insert_sorted(author, title);
     }
-  }
   
   cout << "File has been read." << endl; 
  
@@ -145,8 +146,8 @@ void Library::store_to_file(string fileName){
   Entry* curr = head; 
   
   while( curr != NULL){
-    file << curr->author<< "\n" << curr->title;
-  curr = curr->next;
+    file << curr->author<< "\n" << curr->title << "\n";
+    curr = curr->next;
   }
 
   file.close(); 
@@ -154,9 +155,9 @@ void Library::store_to_file(string fileName){
 
 
 void Library::print(){
-  cout << "START ->";
+  cout << "START -> ";
   printHelper(head); 
-  cout << "END" << endl;
+  cout << " END" << endl;
 }
 
 
