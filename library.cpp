@@ -15,19 +15,43 @@
 using namespace std;
 
 
-// constructor
+
+/**
+ * library constructor
+ *
+ * @pre 
+ * @post library exists
+ * 
+ */
 Library::Library(){
   head = NULL;
 }
 
 
-//destructor
+
+
+/**
+ * destructor
+ *
+ * @pre library exists
+ * @return Library:: 
+ * @post library is destructed
+ * 
+ */
 Library:: ~Library(){
   destructHelper(head);
 }
 
 
-//destruct helper
+
+/**
+ * destruct helper
+ *
+ * @param Entry *curr 
+ * @pre library exists, destructor is called
+ * @post library destructed
+ * 
+ */
 Library::destructHelper(Entry *curr){
   if( curr == NULL) {
     return;
@@ -39,6 +63,21 @@ Library::destructHelper(Entry *curr){
   delete curr; 
 }
 
+
+/**
+ * inserts sorted into library
+ *
+ * @param string author 
+ * @param string title 
+ * @param string isbn 
+ * @param int pages 
+ * @param int year 
+ * @param float price 
+ * @pre library exists, new values exist
+ * @return void 
+ * @post inserts new sort
+ * 
+ */
 void Library::insert_sorted(string author, string title, string isbn, int pages, int year, float price){
   Entry* newEntry = new Entry;
   newEntry->book = Book(author, title, isbn, pages, year, price); 
@@ -60,6 +99,16 @@ void Library::insert_sorted(string author, string title, string isbn, int pages,
 }
 
 //lookup but its find_author
+
+/**
+ * find author
+ *
+ * @param string author 
+ * @pre 
+ * @return string 
+ * @post title is found via the author
+ * 
+ */
 string Library::find_author(string author){
     Entry* curr = head;
     while (curr != NULL){
@@ -73,6 +122,16 @@ string Library::find_author(string author){
 
 
 // reverse lookup, find books by certain author
+
+/**
+ * find album
+ *
+ * @param string title 
+ * @pre 
+ * @return string 
+ * @post author is found by title
+ * 
+ */
 string Library::find_album(string title){
    Entry* curr = head;
    while (curr != NULL){
@@ -85,6 +144,17 @@ string Library::find_album(string title){
  }
 
 
+
+/**
+ * delete book
+ *
+ * @param string author 
+ * @param string title 
+ * @pre book exists
+ * @return void 
+ * @post book is removed
+ * 
+ */
 void Library::delete_book(string author, string title){
   Entry *temp;
   Entry* eraser = NULL;
@@ -115,6 +185,16 @@ void Library::delete_book(string author, string title){
 }
 
 
+
+/**
+ * loads file info
+ *
+ * @param string fileName 
+ * @pre 
+ * @return void 
+ * @post file info is loaded
+ * 
+ */
 void Library::load_from_file(string fileName){
   ifstream file(fileName);
 
@@ -136,6 +216,16 @@ void Library::load_from_file(string fileName){
 
 
 
+
+/**
+ * stores to file
+ *
+ * @param string fileName 
+ * @pre 
+ * @return void 
+ * @post new info is stored to file
+ * 
+ */
 void Library::store_to_file(string fileName){
   ofstream file(fileName);
   if(!file.is_open()){
@@ -153,6 +243,15 @@ void Library::store_to_file(string fileName){
 }
 
 
+
+/**
+ * print
+ *
+ * @pre list exists, there is something to print
+ * @return void 
+ * @post list is printed
+ * 
+ */
 void Library::print(){
   cout << "START -> ";
   printHelper(head); 
@@ -160,6 +259,16 @@ void Library::print(){
 }
 
 
+
+/**
+ * print helper
+ *
+ * @param Entry* curr 
+ * @pre list exists
+ * @return void 
+ * @post list is printed
+ * 
+ */
 void Library::printHelper(Entry* curr){
   if (curr == NULL){
     cout << "Library is empty. " << endl;
@@ -176,6 +285,17 @@ void Library::printHelper(Entry* curr){
 }
 
 
+
+/**
+ * push front
+ *
+ * @param string author 
+ * @param string title 
+ * @pre new data
+ * @return void 
+ * @post data is pushed to front
+ * 
+ */
 void Library::push_front(string author, string title){
   Entry *newEntry = new Entry;
   newEntry->author = author;
@@ -185,6 +305,17 @@ void Library::push_front(string author, string title){
   head = newEntry; 
 }
 
+
+/**
+ * push back
+ *
+ * @param string author 
+ * @param string title 
+ * @pre new data exists
+ * @return void 
+ * @post data is pushed to back
+ * 
+ */
 void Phonebook::push_back(string author, string title){
   Entry* newEntry = new Entry;
   newEntry->author = author;
