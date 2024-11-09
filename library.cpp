@@ -28,7 +28,7 @@ Library:: ~Library(){
 
 
 //destruct helper
-Library::destructHleper(Entry *curr){
+Library::destructHelper(Entry *curr){
   if( curr == NULL) {
     return;
   }
@@ -111,5 +111,99 @@ void Library::delete(string author, string title){
       return;
     }
     temp = temp->next;
+  }
+}
+
+
+void Library::load_from_file(string fileName){
+  ifstream file(fileName);
+
+  if(!file.is_open()){
+    cout << "File could not open. " << endl;
+    return; 
+  }
+  
+  if (getline(author, title)){
+      push_back(author, title);
+    }
+  }
+  
+  cout << "File has been read." << endl; 
+ 
+  file.close(); 
+}
+
+
+
+
+void Library::store_to_file(string fileName){
+  ofstream file(fileName);
+  if(!file.is_open()){
+    return;
+  }
+  
+  Entry* curr = head; 
+  
+  while( curr != NULL){
+    file << curr->author<< "\n" << curr->title;
+  curr = curr->next;
+  }
+
+  file.close(); 
+}
+
+
+void Library::print(){
+  cout << "START ->";
+  printHelper(head); 
+  cout << "END" << endl;
+}
+
+
+void Library::printHelper(Entry* curr){
+  if (curr == NULL){
+    cout << "Library is empty. " << endl;
+    return;
+  }
+  
+  cout << curr->author << " " << curr->title << endl; 
+  
+  if (curr->next != NULL){
+    cout << " -> ";
+  }
+
+  printHelper(curr->next);
+}
+
+
+void Library::push_front(string author, string title){
+  Entry *newEntry = new Entry;
+  newEntry->author = author;
+  newEntry->title = title;
+  
+  newEntry->next = head;
+  head = newEntry; 
+}
+
+void Phonebook::push_back(string author, string title){
+  Entry* newEntry = new Entry;
+  newEntry->author = author;
+  newEntry->title = title; 
+  newEntry->next = NULL;
+  
+  // case 1, empty list
+  if (head == NULL){
+    head = newEntry;
+  }
+  // case 2, list is !empty
+  else {
+    Entry *tail = head;
+
+    // get to the end
+    while (tail->next != NULL) {
+      tail = tail->next;
+    }
+
+    tail->next = newEntry;
   }
 }
