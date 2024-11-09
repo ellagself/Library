@@ -39,10 +39,9 @@ Library::destructHelper(Entry *curr){
   delete curr; 
 }
 
-void Library::insert_sorted(string author, string title){
+void Library::insert_sorted(string author, string title, string isbn, int pages, int year, float price){
   Entry* newEntry = new Entry;
-  newEntry->author = author;
-  newEntry->title = title; 
+  newEntry->book = Book(author, title, isbn, pages, year, price); 
   newEntry->next = NULL; 
 
   // if list is empty insert here
