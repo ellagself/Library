@@ -1,3 +1,13 @@
+/**
+ * @file book.h
+ * @author Mangos Cameron Tucker and Ella Self 
+ * @date 2024-11-08
+ * @brief Book Header
+ * 
+ * book header file, struct book
+ */
+
+
 #ifndef BOOK_H
 #define BOOK_H
 
